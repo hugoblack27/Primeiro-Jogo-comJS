@@ -1,5 +1,6 @@
 const mario = document.querySelector('.mario');
 const pipe = document.querySelector('.pipe');
+const retornar = document.querySelector('.return')
 
 const jump = () => {
     mario.classList.add('jump');
@@ -15,11 +16,13 @@ const loop = setInterval(() => {
 
     
     
+    retornar.style.display = "none"
     const pipePosition = pipe.offsetLeft;
     const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
     
     if(pipePosition <= 120 && pipePosition > 0 && marioPosition < 80){
-
+        retornar.style.display = "block"
+        
         pipe.style.animation = 'none';
         pipe.style.left = `${pipePosition}px`;
 
@@ -30,10 +33,13 @@ const loop = setInterval(() => {
         mario.style.width = '75px'
         mario.style.marginLeft = '50px'
 
-        clearInterval(loop);
     }
 
 }, 10);
+
+retornar.onclick = () => {
+    location.reload();
+}
 
 document.addEventListener( "click", jump)
 document.addEventListener( "keypress", jump)
