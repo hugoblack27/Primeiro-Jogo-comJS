@@ -42,4 +42,5 @@ retornar.onclick = () => {
 }
 
 document.addEventListener( "click", jump)
+document.addEventListener( "touchstart", jump)
 document.addEventListener( "keypress", jump)
