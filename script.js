@@ -1,48 +1,78 @@
 const mario = document.querySelector('.mario');
 const pipe = document.querySelector('.pipe');
-const retornar = document.querySelector('.return')
-const musica = document.querySelector('.source')
+const retornar = document.querySelector('.return');
+const pause = document.querySelector('.source');
+const pause2 = document.querySelector('.source2');
 
-const jump = () => {
-    mario.classList.add('jump');
+let jogoativo = true;
+let pontuacao = 0;
+let pontomarcado = false;
 
-    setTimeout(() => {
+const pontuacaoscore = document.getElementById('pontuacao');
 
-        mario.classList.remove('jump')
-
-    }, 500);
+function aumentarPontuacao() {
+    if (!jogoativo) return;
+    pontuacao += 10;
+    pontuacaoscore.textContent = pontuacao;
 }
 
-mario.style.marginLeft = '0px'
+const jump = () => {
+    if (!jogoativo) return;
+
+    if (!mario.classList.contains('jump')) {
+        mario.classList.add('jump');
+        setTimeout(() => {
+            mario.classList.remove('jump');
+        }, 500);
+    }
+};
+
+pause2.pause();
+mario.style.marginLeft = '0px';
 
 const loop = setInterval(() => {
+    retornar.style.display = "none";
     
-    retornar.style.display = "none"
     const pipePosition = pipe.offsetLeft;
     const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
-    
-    if(pipePosition <= 120 && pipePosition > 0 && marioPosition < 80){
-        retornar.style.display = "block"
-        
+
+    // Detecta colisão
+    if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
+        retornar.style.display = "block";
+
         pipe.style.animation = 'none';
         pipe.style.left = `${pipePosition}px`;
 
         mario.style.animation = 'none';
-        mario.style.left = `${marioPosition}px`;
+        mario.style.left = `${pipePosition}px`;
 
         mario.src = '/mario-jump-images/game-over.png';
-        mario.style.width = '75px'
-        mario.style.marginLeft = '50px'
+        mario.style.width = '75px';
+        mario.style.marginLeft = '50px';
 
-        musica.src = '/mario-jump-images/Super Mario Bros - game over song.mp3'
+        clearInterval(loop);
+        jogoativo = false;
+
+        pause.currentTime = 0;
+        pause.pause();
+        pause2.play();
+    }
+
+    
+    if (pipePosition < 0 && !pontomarcado && jogoativo) {
+        aumentarPontuacao();
+        pontomarcado = true;
+    }
+
+    
+    if (pipePosition > 120) {
+        pontomarcado = false;
     }
 
 }, 10);
 
-retornar.onclick = () => {
-    location.reload();
-}
+retornar.onclick = () => location.reload();
 
-document.addEventListener( "click", jump)
-document.addEventListener( "touchstart", jump)
-document.addEventListener( "keypress", jump)
+document.addEventListener("click", jump);
+document.addEventListener("touchstart", jump);
+document.addEventListener("keypress", jump);
