@@ -12,9 +12,9 @@ const jump = () => {
     }, 500);
 }
 
-const loop = setInterval(() => {
+mario.style.marginLeft = '0px'
 
-    
+const loop = setInterval(() => {
     
     retornar.style.display = "none"
     const pipePosition = pipe.offsetLeft;
