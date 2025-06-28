@@ -45,6 +45,15 @@
  width: 50px;
 }
 
+.source{
+    display: none;
+}
+
+audio{
+    display: none;
+}
+
+
 @keyframes pipe-animation{
     from{
         right: -80px;

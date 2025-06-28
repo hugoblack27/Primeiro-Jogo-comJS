@@ -1,6 +1,7 @@
 const mario = document.querySelector('.mario');
 const pipe = document.querySelector('.pipe');
 const retornar = document.querySelector('.return')
+const musica = document.querySelector('.source')
 
 const jump = () => {
     mario.classList.add('jump');
@@ -33,6 +34,7 @@ const loop = setInterval(() => {
         mario.style.width = '75px'
         mario.style.marginLeft = '50px'
 
+        musica.src = '/mario-jump-images/Super Mario Bros - game over song.mp3'
     }
 
 }, 10);
